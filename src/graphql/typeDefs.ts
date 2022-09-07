@@ -1,13 +1,16 @@
-import { buildSchema } from 'graphql';
+const { gql } = require('apollo-server');
 
-export default buildSchema(`
+export default gql`
+    type Example {
+        name: String
+    }
     type User {
         _id: ID!
         name: String!
         email: String!
         password: String!
-        posts: [Post!]!
-        friends: [Friends!]!
+        posts: [Post!]
+        friends: [Friendship!]
         createdAt: String!
         updatedAt: String!
     }
@@ -16,8 +19,8 @@ export default buildSchema(`
         _id: ID!
         content: String!
         creator: User!
-        comments: [Comment!]!
-        reactions: [Reactions!]!
+        comments: [Comment!]
+        reactions: [Reaction!]
         createdAt: String!
         updatedAt: String!
     }
@@ -51,14 +54,15 @@ export default buildSchema(`
         password: String!
     }
 
-    type RootQuery {
+    type Query {
+        example: Example!
         post(id: ID!): Post!
         comment(id: ID!): Comment!
         reaction(id: ID!): Reaction!
         user: User!
     }
 
-    type RootMutation {
+    type Mutation {
         createUser(userInput: UserInputData): User!
         createPost(content: String!): Post!
         createComment(text: String!): Comment!
@@ -71,9 +75,4 @@ export default buildSchema(`
         deleteReaction(id: ID!): Boolean
         deleteFriendship(id: ID!): Boolean
     }
-
-    schema {
-        query: RootQuery
-        mutation: RootMutation
-    }
-`);
+`;
