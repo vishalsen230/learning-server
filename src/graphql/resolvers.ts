@@ -1,5 +1,9 @@
 const resolvers = {
-    Query: {},
+    Query: {
+        example: () => {
+            return { name: 'vishal' };
+        },
+    },
     Mutation: {},
 };
 
