@@ -63,7 +63,7 @@ export default gql`
     }
 
     type Mutation {
-        createUser(userInput: UserInputData): User!
+        createUser(email: String!, name: String!, password:String!): User!
         createPost(content: String!): Post!
         createComment(text: String!): Comment!
         createFriendship(source: User, target: User, status: String!): Friendship!

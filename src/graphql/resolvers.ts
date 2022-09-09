@@ -4,7 +4,11 @@ const resolvers = {
             return { name: 'vishal' };
         },
     },
-    Mutation: {},
+    Mutation: {
+        createUser: (_arg: any, user: any) => {
+            return user
+        },
+    },
 };
 
 export default resolvers;
