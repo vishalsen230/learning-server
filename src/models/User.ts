@@ -6,27 +6,32 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true,
     },
-    name: {
+    username: {
         type: String,
         required: true,
     },
-    posts: [
-        {
-            type: Schema.type.ObjectId,
-            ref: 'Post',
-        },
-    ],
-    friends: [
-        {
-            type: Schema.type.ObjectId,
-            ref: 'Friendship',
-        },
-    ],
+    token: {
+        type: String,
+        required: true,
+    }
+    // posts: [
+    //     {
+    //         type: Schema.type.ObjectId,
+    //         ref: 'Post',
+    //     },
+    // ],
+    // friends: [
+    //     {
+    //         type: Schema.type.ObjectId,
+    //         ref: 'Friendship',
+    //     },
+    // ],
 });
 
-export default mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);
