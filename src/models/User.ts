@@ -6,6 +6,7 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
     },
     password: {
         type: String,
@@ -15,18 +16,18 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    posts: [
-        {
-            type: Schema.type.ObjectId,
-            ref: 'Post',
-        },
-    ],
-    friends: [
-        {
-            type: Schema.type.ObjectId,
-            ref: 'Friendship',
-        },
-    ],
+    // posts: [
+    //     {
+    //         type: Schema.type.ObjectId,
+    //         ref: 'Post',
+    //     },
+    // ],
+    // friends: [
+    //     {
+    //         type: Schema.type.ObjectId,
+    //         ref: 'Friendship',
+    //     },
+    // ],
 });
 
 export default mongoose.model('User', userSchema);
