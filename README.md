@@ -16,4 +16,5 @@ git clone git@github.com:vishalsen230/learning-server.git
 3. Set the `DATABASE_URL` in your .env file.
 4. Run docker image of postgresql using `docker-compose up -d`
 5. Run the initial migration of prisma schema using `npx prisma migrate dev --name "init"`
-6. Run `npm run dev` from the root directory to run the apollo server.
+6. Run `npx prisma studio` to run prisma studio on localhost:5555.
+7. Run `npm run dev` from the root directory to run the apollo server.
