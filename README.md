@@ -13,7 +13,7 @@
 git clone git@github.com:vishalsen230/learning-server.git
 ```
 2. Run `npm i` once.
-3. Set the `DATABASE_URL` in your .env file.
+3. Set the `DATABASE_URL` in your .env file to `postgresql://captain:captain@localhost:5432/sociaApp?schema=public`.
 4. Run docker image of postgresql using `docker-compose up -d`
 5. Run the initial migration of prisma schema using `npx prisma migrate dev --name "init"`
 6. Run `npx prisma studio` to run prisma studio on localhost:5555.
