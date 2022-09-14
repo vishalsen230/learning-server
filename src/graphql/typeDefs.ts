@@ -1,21 +1,50 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
 
 export default gql`
-    type AuthData {
-        token: String!
-        userId: String!
-    }
-
     type User {
-        _id: ID!
+        id: ID!
         name: String!
         email: String!
-        password: String!
-        token: String!
         posts: [Post!]
-        friends: [Friendship!]
         createdAt: String!
-        updatedAt: String!
+    }
+
+    type Post {
+        id: ID!
+        title: String!
+        content: String!
+        author: User!
+        comments: [Comment!]
+        createdAt: String!
+    }
+
+    type Comment {
+        id: ID!
+        content: String!
+        postId: Int
+    }
+
+    type CreateUserResponse {
+        code: Int!
+        success: Boolean!
+        message: String!
+        token: String
+        user: User
+    }
+
+    type LoginUserResponse {
+        code: Int!
+        success: Boolean!
+        message: String!
+        token: String
+        userId: Int
+    }
+
+    type AddPostResponse {
+        code: Int!
+        success: Boolean!
+        message: String!
+        post: Post
     }
 
     input UserInputData {
@@ -24,63 +53,19 @@ export default gql`
         password: String!
     }
 
-    type Post {
-        _id: ID!
-        content: String!
-        creator: User!
-        comments: [Comment!]
-        reactions: [Reaction!]
-        createdAt: String!
-        updatedAt: String!
-    }
-
-    type Comment {
-        _id: ID!
-        content: String!
-        creator: User!
-        post: Post!
-        createdAt: String!
-        updatedAt: String!
-    }
-
-    type Reaction {
-        _id: ID!
-        type: String!
-        post: Post!
-        user: User!
-    }
-
-    type Friendship {
-        _id: ID!
-        source: User!
-        target: User!
-        status: String!
-    }
-
     input LoginInput {
         email: String!
         password: String!
     }
 
     type Query {
-        post(id: ID!): Post!
-        comment(id: ID!): Comment!
-        reaction(id: ID!): Reaction!
-        user: User!
+        userData(userId: ID!): User!
     }
 
     type Mutation {
-        createUser(userInput: UserInputData): User!
-        loginUser(loginInput: LoginInput): AuthData!
+        createUser(userInput: UserInputData): CreateUserResponse!
+        loginUser(loginInput: LoginInput): LoginUserResponse!
 
-        createPost(content: String!): Post!
-        createComment(text: String!): Comment!
-
-        updatePost(id: ID!, content: String!): Post!
-        updateFriendship(id: ID!, status: String!): Friendship!
-
-        deletePost(id: ID!): Boolean
-        deleteReaction(id: ID!): Boolean
-        deleteFriendship(id: ID!): Boolean
+        addPost(userId: ID!, title: String!, content: String!): AddPostResponse!
     }
 `;
