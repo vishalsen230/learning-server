@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const userMongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const Uschema = userMongoose.Schema;
 
-const userSchema = new Schema({
+const userSchema = new Uschema({
     email: {
         type: String,
         required: true,
@@ -19,19 +19,11 @@ const userSchema = new Schema({
     token: {
         type: String,
         required: true,
+    },
+    createdAt: {
+        type: String,
+        required: true,
     }
-    // posts: [
-    //     {
-    //         type: Schema.type.ObjectId,
-    //         ref: 'Post',
-    //     },
-    // ],
-    // friends: [
-    //     {
-    //         type: Schema.type.ObjectId,
-    //         ref: 'Friendship',
-    //     },
-    // ],
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = userMongoose.model('User', userSchema);
