@@ -13,9 +13,7 @@ export default gql`
         password: String!
         token: String!
         posts: [Post!]
-        friends: [Friendship!]
         createdAt: String!
-        updatedAt: String!
     }
 
     input UserInputData {
@@ -26,35 +24,11 @@ export default gql`
 
     type Post {
         _id: ID!
-        content: String!
+        description: String!
+        title: String!
         creator: User!
-        comments: [Comment!]
-        reactions: [Reaction!]
+        location: String
         createdAt: String!
-        updatedAt: String!
-    }
-
-    type Comment {
-        _id: ID!
-        content: String!
-        creator: User!
-        post: Post!
-        createdAt: String!
-        updatedAt: String!
-    }
-
-    type Reaction {
-        _id: ID!
-        type: String!
-        post: Post!
-        user: User!
-    }
-
-    type Friendship {
-        _id: ID!
-        source: User!
-        target: User!
-        status: String!
     }
 
     input LoginInput {
@@ -62,25 +36,23 @@ export default gql`
         password: String!
     }
 
+    input PostInput {
+        title: String!
+        description: String!
+        location: String!
+    }
+
     type Query {
-        post(id: ID!): Post!
-        comment(id: ID!): Comment!
-        reaction(id: ID!): Reaction!
         user: User!
+        userPosts: [Post!]
+        post(id: ID!): Post!
     }
 
     type Mutation {
-        createUser(userInput: UserInputData): User!
+        createUser(userInput: UserInputData): AuthData!
         loginUser(loginInput: LoginInput): AuthData!
 
-        createPost(content: String!): Post!
-        createComment(text: String!): Comment!
-
-        updatePost(id: ID!, content: String!): Post!
-        updateFriendship(id: ID!, status: String!): Friendship!
-
+        createPost(postInput: PostInput): Post!
         deletePost(id: ID!): Boolean
-        deleteReaction(id: ID!): Boolean
-        deleteFriendship(id: ID!): Boolean
     }
 `;
