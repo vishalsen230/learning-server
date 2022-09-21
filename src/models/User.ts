@@ -16,18 +16,16 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    // posts: [
-    //     {
-    //         type: Schema.type.ObjectId,
-    //         ref: 'Post',
-    //     },
-    // ],
-    // friends: [
-    //     {
-    //         type: Schema.type.ObjectId,
-    //         ref: 'Friendship',
-    //     },
-    // ],
+    createdAt: {
+        type: String,
+        required: true,
+    },
+    posts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Post',
+        },
+    ],
 });
 
 export default mongoose.model('User', userSchema);

@@ -1,10 +1,13 @@
 import userResolvers from './users';
+import postResolvers from './posts';
 
 export default {
     Query: {
-        ...userResolvers.Query
+        ...userResolvers.Query,
+        ...postResolvers.Query,
     },
     Mutation: {
-        ...userResolvers.Mutation
+        ...userResolvers.Mutation,
+        ...postResolvers.Mutation,
     },
 };
