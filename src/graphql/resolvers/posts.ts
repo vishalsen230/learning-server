@@ -26,11 +26,38 @@ export default {
                 const createdPost = await post.save();
                 user.posts.push(createdPost);
                 await user.save();
-                let data = {
+
+                return {
                     ...createdPost._doc,
                 };
-                console.log('data', data);
-                return data;
+            } catch (err: any) {
+                throw new ApolloError('Some error occurred', err);
+            }
+        },
+        async deletePost(_: any, { id }: any, { req, res }: any) {
+            try {
+                if (!req.isAuth) {
+                    throw new ApolloError('Not authenticated');
+                }
+
+                const post = await Post.findById(id);
+
+                if (!post) {
+                    throw new ApolloError('No post found');
+                }
+
+                if (post.creator.toString() !== req.userId.toString()) {
+                    throw new ApolloError('Not authorised to delete the post');
+                }
+
+                await Post.findByIdAndRemove(id);
+
+                const user = await User.findById(req.userId);
+                user.posts.pull(id);
+
+                await user.save();
+
+                return true;
             } catch (err: any) {
                 throw new ApolloError('Some error occurred', err);
             }
@@ -54,7 +81,6 @@ export default {
                 if (!req.isAuth) {
                     throw new ApolloError('Not authenticated');
                 }
-                console.log('postId', id);
                 const post = await Post.findById(id);
                 if (!post) {
                     throw new ApolloError('Post not found');
