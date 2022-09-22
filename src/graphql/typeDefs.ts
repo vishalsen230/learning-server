@@ -1,11 +1,6 @@
 const { gql } = require('apollo-server');
 
 export default gql`
-    type AuthData {
-        token: String!
-        userId: String!
-    }
-
     type User {
         _id: ID!
         name: String!
@@ -16,12 +11,6 @@ export default gql`
         createdAt: String!
     }
 
-    input UserInputData {
-        email: String!
-        name: String!
-        password: String!
-    }
-
     type Post {
         _id: ID!
         description: String!
@@ -29,6 +18,12 @@ export default gql`
         creator: User!
         location: String
         createdAt: String!
+    }
+
+    input UserInputData {
+        email: String!
+        name: String!
+        password: String!
     }
 
     input LoginInput {
@@ -42,15 +37,39 @@ export default gql`
         location: String!
     }
 
+    type CreateUserResponse {
+        code: Int!
+        success: Boolean!
+        message: String!
+        token: String
+        userId: ID
+    }
+
+    type LoginUserResponse {
+        code: Int!
+        success: Boolean!
+        message: String!
+        token: String
+        userId: ID
+    }
+
+    type UserPostsResponse {
+        code: Int!
+        success: Boolean!
+        message: String!
+        name: String
+        posts: [Post!]
+    }
+
     type Query {
         user: User!
-        userPosts: [Post!]
+        userPosts: UserPostsResponse!
         post(id: ID!): Post!
     }
 
     type Mutation {
-        createUser(userInput: UserInputData): AuthData!
-        loginUser(loginInput: LoginInput): AuthData!
+        createUser(userInput: UserInputData): CreateUserResponse!
+        loginUser(loginInput: LoginInput): LoginUserResponse!
 
         createPost(postInput: PostInput): Post!
         deletePost(id: ID!): Boolean
