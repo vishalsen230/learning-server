@@ -36,9 +36,20 @@ export default {
 
                 const createdUser = await newUser.save();
 
-                return { token: token, userId: createdUser._id };
+                return {
+                    code: 200,
+                    success: true,
+                    message: `Successfully created user with userId: ${createdUser._id}`,
+                    token,
+                    userId: createdUser._id
+                };
             } catch (err: any) {
-                throw new ApolloError('Some error occurred', err);
+                return {
+                    code: 500,
+                    success: false,
+                    message: `${err}`,
+                    userId: null
+                }
             }
         },
 
@@ -61,9 +72,19 @@ export default {
                     expiresIn: '2h',
                 });
 
-                return { token: token, userId: user._id };
+                return {
+                    code: 200,
+                    success: true,
+                    message: `User Successfully logged in`,
+                    token: token,
+                    userId: user._id
+                };
             } catch (err: any) {
-                throw new ApolloError('Some error occurred', err);
+                return {
+                    code: 500,
+                    success: false,
+                    message: `${err}`
+                };
             }
         },
     },

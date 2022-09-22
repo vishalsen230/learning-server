@@ -71,9 +71,20 @@ export default {
                 }
 
                 const postsInfo = await User.findById(req.userId).populate('posts');
-                return postsInfo.posts;
+                console.log(`postsInfo: ${postsInfo}`);
+                return {
+                    code: 200,
+                    success: true,
+                    message: `Successfully fetched user's post`,
+                    name: postsInfo.name ,
+                    posts: postsInfo.posts
+                }
             } catch (err: any) {
-                throw new ApolloError('Some error occurred', err);
+                return {
+                    code: 500,
+                    success: false,
+                    message: `${err}`
+                }
             }
         },
         post: async function (_: any, { id }: any, { req, res }: any) {
